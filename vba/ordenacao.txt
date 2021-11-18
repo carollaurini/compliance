@@ -1,0 +1,75 @@
+'Reordena a listbox, com ncol numero de colunas, baseado na coluna indexcolsort
+Sub reorder_form(sheet As String, ncol As Integer, indexcolsort As Integer, listbox As Object, colsize As String, form As Object)
+    On Error GoTo fail:
+        Dim i As Long
+        Dim j As Long
+        Dim sTemp As String
+        Dim LbList As Variant
+        Dim c As Integer
+        Dim lr As Long
+        
+        'Store the list in an array for sorting
+        LbList = listbox.List
+        
+        
+        For i = LBound(LbList, 1) To UBound(LbList, 1) - 1
+            For j = i + 1 To UBound(LbList, 1)
+                If LCase(LbList(i, indexcolsort)) > LCase(LbList(j, indexcolsort)) Then
+                    For c = 0 To ncol - 1
+                        'Swap the value for each column c
+                        sTemp = LbList(i, c)
+                        LbList(i, c) = LbList(j, c)
+                        LbList(j, c) = sTemp
+                        MsgBox (LbList(j, c))
+                    Next c
+                End If
+            Next j
+        Next i
+        
+        MsgBox ("Parte1")
+        Set sh = ThisWorkbook.Sheets(sheet)
+        lr = sh.Range("A" & Application.Rows.Count).End(xlUp).Row
+        If lr = 1 Then lr = 2
+        
+        With listbox
+        'Remove the contents of the listbox
+            .RowSource = ""
+            .Clear
+        End With
+        
+        MsgBox ("Parte2")
+        
+        
+        With listbox
+        'Repopulate with the sorted list
+            .List = LbList
+        End With
+        
+        MsgBox ("Parte3")
+                
+        With listbox
+            .ColumnWidths = colsize
+            .ColumnCount = ncol
+            .ColumnHeads = True
+            .RowSource = sheet & "!A2:E" & lr
+        End With
+        MsgBox ("Parte4")
+        
+        
+    Exit Sub
+fail:
+    Call TrataErro(err, "")
+End Sub
+
+Sub reorder_sheet(sheet As String, column_letter As String)
+      Set sh = ThisWorkbook.Sheets(sheet)
+      lr = sh.Range("A" & Application.Rows.Count).End(xlUp).Row
+      If lr = 1 Then lr = 2
+      
+      With sheet.Sort
+        .SortFields.Clear
+        .SortFields.Add Key:=Range(column_letter), Order:=xlAscending
+        .setRande Range(sheet & "!A2:E" & lr)
+        
+
+End Sub

@@ -1,0 +1,13 @@
+1-- rejeitada por ativo e contraparte
+2-- rejeitada por ativo e contraparte
+3-- aprovada
+4-- aprovada
+5-- rejeitada por ativo
+6-- rejeitada por contraparte
+7-- rejeitada por ativo e contraparte
+8-- rejeitada por ativo e contraparte
+9-- rejeitada por ativo e contraparte
+10-- aprovada
+11-- rejeitada por ativo e contraparte
+12-- rejeitada por contraparte
+13-- rejeitada por ativo
